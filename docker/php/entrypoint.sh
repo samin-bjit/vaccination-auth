@@ -11,17 +11,18 @@ if [ ! -f ".env" ]; then
     php artisan cache:clear
     php artisan config:clear
     php artisan route:clear
-    php artisan migrate
 else
-  echo "env file exists."
-  if [ -z "$APP_KEY" ]; then
-      php artisan key:generate
-  else
-     echo "Application key already generated $APP_KEY"
-  fi
-  php artisan cache:clear
-  php artisan config:clear
-  php artisan route:clear
+    echo "env file exists."
+    if [ -z "$APP_KEY" ]; then
+        php artisan key:generate
+    else
+        echo "Application key already generated $APP_KEY"
+    fi
+    php artisan cache:clear
+    php artisan config:clear
+    php artisan route:clear
 fi
+
+php artisan migrate
 
 exec "$@"
