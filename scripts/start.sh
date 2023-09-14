@@ -3,7 +3,7 @@
 db_port=3306
 db_database=registration
 db_username=root
-db_password=$(aws ssm get-parameter --with-decryption --name registration-db-password --query "Parameter.Value" --output text)
+db_password=$(aws ssm get-parameter --with-decryption --name appointment-db-password --query "Parameter.Value" --output text)
 db_host=$(aws ssm get-parameter --name appointment-db-host --query "Parameter.Value" --output text)
 
 # Container name
