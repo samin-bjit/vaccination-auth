@@ -82,7 +82,7 @@ class Controller extends BaseController
 
         $res = $this->client->request(
             'POST',
-            'http://vaccination_registration_app:19090/api/user/registration',
+            env('REGISTRATION_SERVICE', '') . '/user/registration',
             [
                 'form_params' => $input
             ]
