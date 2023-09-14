@@ -24,23 +24,6 @@ services:
       - ./:/var/www/html:delegated
     restart: unless-stopped
     tty: true
-    depends_on:
-      - vaccination_auth_db
-    networks:
-      - vaccination_app
-
-  # Mysql database
-  vaccination_auth_db:
-    image: mysql:5.7
-    container_name: vaccination_auth_db
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3307:3306"
-    env_file:
-      - ./docker/mysql/mysql.env
-    volumes:
-      - ./docker/mysql/data:/var/lib/mysql/
     networks:
       - vaccination_app
 

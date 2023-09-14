@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -23,13 +21,10 @@ $router->get('/version', function () use ($router) {
     return $router->app->version();
 });
 
-Route::group([
-
-    'prefix' => 'api'
-
-], function ($router) {
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('user-profile', 'AuthController@me');
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->post('registration', 'Controller@registration');
+    $router->post('login', 'Controller@login');
+    $router->post('logout', 'Controller@logout');
+    $router->post('refresh', 'Controller@refresh');
+    $router->post('user-profile', 'Controller@me');
 });

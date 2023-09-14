@@ -2,16 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+use Laravel\Lumen\Routing\Controller as BaseController;
+use GuzzleHttp\Client;
+use Exception;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\User;
 
 class Controller extends BaseController
 {
+    protected $guard = 'api';
+    protected $client = null;
+
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'refresh', 'logout']]);
+        $this->middleware('auth:api', ['except' => ['login', 'refresh', 'logout', 'registration']]);
+        $this->client = new Client();
     }
+
+    public function getUserByEmail($email)
+    {
+        $apiUrl = env('REGISTRATION_SERVICE', '') . "/user?email=$email";
+        $res = $this->client->request('GET', $apiUrl);
+        return json_decode($res->getBody(), true);
+    }
+
+    public function convertUser($userArray)
+    {
+        $object = new User();
+        foreach ($userArray as $key => $value) {
+            $object->$key = $value;
+        }
+        return $object;
+    }
+
     /**
      * Get a JWT via given credentials.
      *
@@ -20,7 +44,6 @@ class Controller extends BaseController
      */
     public function login(Request $request)
     {
-
         $this->validate($request, [
             'email' => 'required|string',
             'password' => 'required|string',
@@ -28,11 +51,43 @@ class Controller extends BaseController
 
         $credentials = $request->only(['email', 'password']);
 
-        if (!$token = JWTAuth::attempt($credentials)) {
+        try {
+            $user = $this->getUserByEmail($credentials['email']);
+            $user = $this->convertUser($user);
+            if (!password_verify($credentials['password'], $user->password)) {
+                throw new Exception('User not found??');
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => [
+                    'code' => 404,
+                    'message' => $e->getMessage(),
+                ]
+            ], 404);
+        }
+
+        if (!$token = auth($this->guard)->login($user)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);
+    }
+
+    public function registration(Request $request)
+    {
+        $input = $request->all();
+        if (isset($input['password']) && !empty($input['password'])) {
+            $input['password'] = password_hash($input['password'], PASSWORD_BCRYPT);
+        }
+
+        $res = $this->client->request(
+            'POST',
+            'http://vaccination_registration_app:19090/api/user/registration',
+            [
+                'form_params' => $input
+            ]
+        );
+        return json_decode($res->getBody(), true);
     }
 
     /**
@@ -64,7 +119,8 @@ class Controller extends BaseController
      */
     public function refresh()
     {
-        return $this->respondWithToken(JWTAuth::refresh());
+        $token = JWTAuth::getToken();
+        return $this->respondWithToken(JWTAuth::refresh($token));
     }
 
     /**
