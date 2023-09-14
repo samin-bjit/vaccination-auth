@@ -10,6 +10,6 @@ if [ ! -f ".env" ]; then
 fi
 
 php artisan jwt:secret -f
-# php artisan cache:clear
+php artisan cache:clear
 
 exec "$@"
