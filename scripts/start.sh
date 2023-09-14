@@ -7,8 +7,8 @@ db_password=$(aws ssm get-parameter --with-decryption --name appointment-db-pass
 db_host=$(aws ssm get-parameter --name appointment-db-host --query "Parameter.Value" --output text)
 
 # Container name
-container_name="vaccination-registration"
-image_tag=registration-latest
+container_name="vaccination-auth"
+image_tag=auth-latest
 
 aws_default_region=$(aws ssm get-parameter --name default-region-aws --query "Parameter.Value" --output text)
 aws_account_id=$(aws ssm get-parameter --with-decryption --name account-id --query "Parameter.Value" --output text)

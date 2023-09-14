@@ -3,7 +3,7 @@ version: 0.2
 env:
   shell: "/bin/sh"
   variables:
-    IMAGE_TAG: registration-latest
+    IMAGE_TAG: auth-latest
     IMAGE_REPO_NAME: vaccination-system-images
   parameter-store:
     ECR_REGISTRY_URI: ecr-registry-uri
