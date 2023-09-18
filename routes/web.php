@@ -27,4 +27,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('logout', 'Controller@logout');
     $router->post('refresh', 'Controller@refresh');
     $router->post('user-profile', 'Controller@me');
+
+    $router->post('appointments', 'AppointmentController@saveAppointment');
+    $router->get('appointments', 'AppointmentController@newAppointment');
+    $router->get('user/appointments', 'AppointmentController@appointments');
+    $router->get('appointments/{appointmentId}', 'AppointmentController@getAppointment');
 });

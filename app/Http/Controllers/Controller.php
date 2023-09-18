@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Laravel\Lumen\Routing\Controller as BaseController;
-use GuzzleHttp\Client;
 use Exception;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\User;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Laravel\Lumen\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
@@ -75,18 +75,30 @@ class Controller extends BaseController
 
     public function registration(Request $request)
     {
+        $apiUrl = env('REGISTRATION_SERVICE', '') . "/user/registration";
+
         $input = $request->all();
         if (isset($input['password']) && !empty($input['password'])) {
             $input['password'] = password_hash($input['password'], PASSWORD_BCRYPT);
         }
 
-        $res = $this->client->request(
-            'POST',
-            env('REGISTRATION_SERVICE', '') . '/user/registration',
-            [
-                'form_params' => $input
-            ]
-        );
+        try {
+            $res = $this->client->request(
+                'POST',
+                $apiUrl,
+                [
+                    'form_params' => $input
+                ]
+            );
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => [
+                    'code' => 400,
+                    'message' => $e->getMessage(),
+                ]
+            ], 404);
+        }
+
         return json_decode($res->getBody(), true);
     }
 
