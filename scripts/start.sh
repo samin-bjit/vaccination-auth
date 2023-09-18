@@ -24,7 +24,7 @@ echo Runing docker image...
 docker stop $container_name
 docker rm $container_name
 
-docker run -d -it -p 8005:19090 \
+docker run -d -it -p 8002:19090 \
     -e DB_PORT=$db_port \
     -e DB_HOST=$db_host \
     -e DB_DATABASE=$db_database \
