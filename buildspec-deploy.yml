@@ -5,10 +5,10 @@ env:
   variables:
     DB_PORT: 3306
     DB_DATABASE: registration
+    DB_USERNAME: vms-user
     
   parameter-store:
     DB_HOST: db-host
-    DB_USERNAME: db-username
     DB_PASSWORD: db-password
     
 phases:
