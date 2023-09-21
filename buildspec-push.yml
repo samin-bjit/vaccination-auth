@@ -3,7 +3,7 @@ version: 0.2
 env:
   shell: "/bin/sh"
   variables:
-    IMAGE_TAG: registration-service
+    IMAGE_TAG: auth-service
   parameter-store:
     ECR_REGISTRY_URI: ecr-registry-uri
     AWS_DEFAULT_REGION: default-region-aws
