@@ -114,4 +114,27 @@ class AppointmentController extends BaseController
         }
         return response()->json($response, 200);
     }
+
+    public function updateAppointment($appointmentId, Request $request)
+    {
+        $apiUrl = env('APPOINTMENT_SERVICE', '') . "/users/appointment/$appointmentId";
+        $input = $request->all();
+        try {
+            $res = $this->client->request(
+                'PUT',
+                $apiUrl,
+                [
+                    'form_params' => $input
+                ]
+            );
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => [
+                    'code' => 400,
+                    'message' => $e->getMessage(),
+                ]
+            ], 404);
+        }
+        return json_decode($res->getBody(), true);
+    }
 }
