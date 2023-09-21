@@ -29,6 +29,27 @@ spec:
               value: "${APP_KEY}"
             - name: APP_ENV
               value: "${APP_ENV}"
+            - name: DB_PORT
+              value: "${DB_PORT}"
+            - name: DB_DATABASE
+              value: "${DB_DATABASE}"
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db-username
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db-host
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db-password
+            
+      
           ports:
             - containerPort: 19090
           resources:
