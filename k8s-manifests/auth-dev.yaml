@@ -1,0 +1,103 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: vaccination-system-dev
+  labels:
+    name: vms
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service-deployment 
+  namespace: vaccination-system-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      vms: auth
+  template:
+    metadata:
+      labels:
+        vms: auth
+    spec:
+      containers:
+        - name: auth-service-pod
+          image: 678554781153.dkr.ecr.ap-southeast-1.amazonaws.com/vaccination-system-images:auth-service
+          imagePullPolicy: Always
+          env:
+            - name: APP_KEY
+              value: "${APP_KEY}"
+            - name: APP_ENV
+              value: "${APP_ENV}"
+            - name: DB_PORT
+              value: "${DB_PORT}"
+            - name: DB_DATABASE
+              value: "${DB_DATABASE}"
+            - name: DB_USERNAME
+              value: "${DB_USERNAME}"
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db-host
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db-password
+            
+      
+          ports:
+            - containerPort: 19090
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: vaccination-system-dev
+  labels:
+    svc: vms
+spec:
+  type: ClusterIP
+  selector:
+    vms: auth
+  ports:
+  - name: web
+    protocol: TCP
+    port: 8002
+    targetPort: 19090
+
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: auth-service-hpa
+  namespace: vaccination-system-dev
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: auth-service-deployment
+  minReplicas: 1
+  maxReplicas: 2
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: AverageValue
+        averageValue: 500Mi
