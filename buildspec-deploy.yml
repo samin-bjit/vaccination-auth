@@ -37,7 +37,9 @@ phases:
       - echo "Apply changes to kube manifests"  
       - kubectl get pods -A
     #   - kubectl delete -f k8s-manifests/deployment-dev.yml
-      - kubectl apply -f k8s-manifests/deployment-dev.yml
+      - kubectl apply -f k8s-manifests/auth-secret.yaml
+      - kubectl apply -f k8s-manifests/auth-dev.yaml
+    
 
 
 
