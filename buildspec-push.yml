@@ -20,7 +20,7 @@ phases:
 
   build:
     commands:
-      - docker load -i docker-image.tar.gz
+      - docker load -i docker-image-auth.tar.gz
       - image_id=$(docker images --format "{{.ID}}" | head -n 1)
       - docker tag $image_id $ECR_REGISTRY_URI:$IMAGE_TAG
       
