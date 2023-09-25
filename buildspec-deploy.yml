@@ -1,16 +1,5 @@
 version: 0.2
 
-env:
-  shell: "/bin/sh"
-  variables:
-    DB_PORT: 3306
-    DB_DATABASE: registration
-    
-  parameter-store:
-    DB_HOST: db-host
-    DB_USERNAME: db-username
-    DB_PASSWORD: db-password
-    
 phases:
   install:
     runtime-versions:
@@ -37,7 +26,9 @@ phases:
       - echo "Apply changes to kube manifests"  
       - kubectl get pods -A
     #   - kubectl delete -f k8s-manifests/deployment-dev.yml
-      - kubectl apply -f k8s-manifests/deployment-dev.yml
+      - kubectl apply -f k8s-manifests/registration-configmap.yaml
+      - kubectl apply -f k8s-manifests/auth-secret.yaml
+      - kubectl apply -f k8s-manifests/auth-dev.yaml
 
 
 

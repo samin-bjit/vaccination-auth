@@ -41,6 +41,7 @@ artifacts:
     - buildspec-trivy-scan.yml
     - buildspec-push.yml
     - buildspec-deploy.yml
+    - k8s-manifests/registration-configmap.yaml
     - k8s-manifests/auth-secret.yaml
     - k8s-manifests/auth-dev.yaml
     
