@@ -38,6 +38,16 @@ spec:
                 configMapKeyRef:
                   name: registration-config
                   key: DB_PORT
+            - name: DB_CONNECTION
+              valueFrom:
+                configMapKeyRef:
+                  name: registration-config
+                  key: DB_CONNECTION
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: registration-config
+                  key: JWT_SECRET
             - name: DB_DATABASE
               valueFrom:
                 configMapKeyRef:

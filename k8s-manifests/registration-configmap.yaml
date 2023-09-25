@@ -6,3 +6,5 @@ data:
   DB_PORT: "3306"
   DB_DATABASE: "registration"
   DB_USERNAME: "vms-user"
+  JWT_SECRET: "ythvxpCAmweSJ7tJwLY5rynl0G5C71KLeHhZVBrV746Xszl48exPUlMIqg5jnIT7"
+  DB_CONNECTION: "mysql"
