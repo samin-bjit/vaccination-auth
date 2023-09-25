@@ -27,7 +27,7 @@ phases:
       - echo "Apply changes to kube manifests"  
       - kubectl get pods -A
 
-      - kubectl apply -f k8s-manifests/registration-configmap.yaml
+      - kubectl apply -f k8s-manifests/registration-configmap.yaml -n vaccination-system-dev
       - kubectl apply -f k8s-manifests/auth-secret.yaml
       - kubectl apply -f k8s-manifests/auth-dev.yaml
 
