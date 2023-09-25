@@ -44,15 +44,10 @@ spec:
                   name: registration-config
                   key: DB_DATABASE
             - name: DB_USERNAME
-<<<<<<< HEAD
               valueFrom:
                 configMapKeyRef:
                   name: registration-config
                   key: DB_USERNAME
-                  
-=======
-              value: "${DB_USERNAME}"
->>>>>>> a18630ee2eda9aae12dbdbc54f53325e4bbd7a44
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
