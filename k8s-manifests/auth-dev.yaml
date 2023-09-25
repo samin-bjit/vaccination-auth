@@ -25,6 +25,10 @@ spec:
           image: 678554781153.dkr.ecr.ap-southeast-1.amazonaws.com/vaccination-system-images:auth-service
           imagePullPolicy: Always
           env:
+            - name: REGISTRATION_SERVICE
+              value: 'http://registration-service:8000/api'
+            - name: APPOINTMENT_SERVICE
+              value: 'http://appointment-service:8001/api'
             - name: APP_KEY
               value: "${APP_KEY}"
             - name: APP_ENV
