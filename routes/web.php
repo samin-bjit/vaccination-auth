@@ -30,6 +30,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->post('appointments', 'AppointmentController@saveAppointment');
     $router->get('appointments', 'AppointmentController@newAppointment');
+    $router->post('appointments/{appointmentId}', 'AppointmentController@updateAppointment');
     $router->get('user/appointments', 'AppointmentController@appointments');
     $router->get('appointments/{appointmentId}', 'AppointmentController@getAppointment');
 });

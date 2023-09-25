@@ -38,6 +38,7 @@ phases:
 artifacts:
   files:
     - docker-image-auth.tar.gz
+    - docker-compose.prod.yaml
     - buildspec-trivy-scan.yml
     - buildspec-push.yml
     - buildspec-deploy.yml

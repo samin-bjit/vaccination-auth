@@ -1,5 +1,6 @@
 version: 0.2
 
+
 phases:
   install:
     runtime-versions:
@@ -25,12 +26,9 @@ phases:
     commands:
       - echo "Apply changes to kube manifests"  
       - kubectl get pods -A
-    #   - kubectl delete -f k8s-manifests/deployment-dev.yml
+
       - kubectl apply -f k8s-manifests/registration-configmap.yaml
       - kubectl apply -f k8s-manifests/auth-secret.yaml
       - kubectl apply -f k8s-manifests/auth-dev.yaml
 
-
-
-    
 privilegedMode: true

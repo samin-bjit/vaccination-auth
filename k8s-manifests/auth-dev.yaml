@@ -25,6 +25,10 @@ spec:
           image: 678554781153.dkr.ecr.ap-southeast-1.amazonaws.com/vaccination-system-images:auth-service
           imagePullPolicy: Always
           env:
+            - name: REGISTRATION_SERVICE
+              value: 'http://registration-service:8000/api'
+            - name: APPOINTMENT_SERVICE
+              value: 'http://appointment-service:8001/api'
             - name: APP_KEY
               value: "${APP_KEY}"
             - name: APP_ENV
@@ -40,11 +44,15 @@ spec:
                   name: registration-config
                   key: DB_DATABASE
             - name: DB_USERNAME
+<<<<<<< HEAD
               valueFrom:
                 configMapKeyRef:
                   name: registration-config
                   key: DB_USERNAME
                   
+=======
+              value: "${DB_USERNAME}"
+>>>>>>> a18630ee2eda9aae12dbdbc54f53325e4bbd7a44
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
@@ -77,7 +85,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    vms: regsitration
+    vms: auth
   ports:
   - name: web
     protocol: TCP
