@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: registration-config
+  namespace: vaccination-system-dev
 data:
   DB_PORT: "3306"
   DB_DATABASE: "registration"
