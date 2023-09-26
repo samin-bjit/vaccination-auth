@@ -5,6 +5,7 @@ env:
     IMAGE_TAG: auth-service
   parameter-store:
     CLUSTER_NAME: Cluster_Name
+    ECR_REGISTRY_URI: ecr-registry-uri
     AWS_DEFAULT_REGION: default-region-aws
     ACCOUNT_ID: account-id
 
@@ -16,8 +17,6 @@ phases:
   pre_build:
     commands:
       - export KUBECONFIG=$HOME/.kube/config
-   
-      
   build:
     commands:
       - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"
