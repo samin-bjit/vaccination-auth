@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: auth-service-pod
-          image: ${ECR_REGISTRY_URI}:${IMAGE_TAG}
+          image: "${ECR_REGISTRY_URI}:${IMAGE_TAG}"
           imagePullPolicy: Always
           env:
             - name: REGISTRATION_SERVICE
