@@ -45,5 +45,7 @@ artifacts:
     - k8s-manifests/registration-configmap.yaml
     - k8s-manifests/auth-secret.yaml
     - k8s-manifests/auth-dev.yaml
+    - k8s-manifests/auth-autoscaling.yaml
+    - k8s-manifests/auth-service.yaml
     
 privilegedMode: true
