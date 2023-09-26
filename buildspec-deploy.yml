@@ -6,7 +6,7 @@ env:
   parameter-store:
     CLUSTER_NAME: Cluster_Name
     AWS_DEFAULT_REGION: default-region-aws
-    ACCOUNT_ID: account_id
+    ACCOUNT_ID: account-id
 
 phases:
   install:
