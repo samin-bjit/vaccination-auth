@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class AppointmentController extends BaseController
@@ -21,7 +22,8 @@ class AppointmentController extends BaseController
     {
         $apiUrl = env('APPOINTMENT_SERVICE', '') . "/users/appointment";
         $input = $request->all();
-        $input['user_name'] = auth()->user();
+        $input['user_id'] = auth()->user()->id;
+        $input['user_name'] = auth()->user()->first_name;
         $input['user_email'] = auth()->user()->email;
         try {
             $res = $this->client->request(
@@ -120,11 +122,12 @@ class AppointmentController extends BaseController
     {
         $apiUrl = env('APPOINTMENT_SERVICE', '') . "/users/appointment/$appointmentId";
         $input = $request->all();
-        $input['user_name'] = auth()->user();
+        $input['user_id'] = auth()->user()->id;
+        $input['user_name'] = auth()->user()->first_name;
         $input['user_email'] = auth()->user()->email;
         try {
             $res = $this->client->request(
-                'PUT',
+                'POST',
                 $apiUrl,
                 [
                     'form_params' => $input
