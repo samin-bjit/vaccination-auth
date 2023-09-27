@@ -4,7 +4,7 @@ env:
   variables:
     IMAGE_TAG: auth-service
   parameter-store:
-    CLUSTER_NAME: Cluster_Name
+    CLUSTER_NAME: cluster-name
     ECR_REGISTRY_URI: ecr-registry-uri
     AWS_DEFAULT_REGION: default-region-aws
     ACCOUNT_ID: account-id
