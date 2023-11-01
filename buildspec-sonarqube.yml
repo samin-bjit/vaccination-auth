@@ -1,9 +1,9 @@
 version: 0.2
 env:
   shell: bash
+  variables:
+    SONAR_PROJECTKEY: vaccination-auth-sonar-analysis
   parameter-store:
-  
-    SONAR_PROJECTKEY: sonar-projectkey
     SONAR_HOSTURL: sonar-host
     SONAR_TOKEN: sonar-token
 phases:
